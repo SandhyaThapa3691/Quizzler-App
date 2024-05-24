@@ -14,9 +14,9 @@ class Quizzler extends StatefulWidget {
 class _QuizzlerState extends State<Quizzler> {
   // List<Icon> scoreboard = [];
   List<String> questions = [
-    " This is your baby",
-    "Are you Single?",
-    "Are you vigin?"
+    "Sea otters have a favorite rock they use to break open food.",
+    "An ant can lift 1,000 times its body weight.",
+    "Greenland is the largest island in the world."
   ];
   List<bool> answer = [false, true, true];
   int questionNumber = 0;
@@ -104,7 +104,7 @@ class _QuizzlerState extends State<Quizzler> {
   }
 }
 
-/* " This is your baby",false,
-    "Are you Single?",true,
-    "Are you vigin?"true,
+/* " Sea otters have a favorite rock they use to break open food.",true,
+    "An ant can lift 1,000 times its body weight.",false,
+    "Greenland is the largest island in the world."true,
 */
