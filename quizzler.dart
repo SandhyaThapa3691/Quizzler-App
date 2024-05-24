@@ -18,7 +18,7 @@ class _QuizzlerState extends State<Quizzler> {
     "An ant can lift 1,000 times its body weight.",
     "Greenland is the largest island in the world."
   ];
-  List<bool> answer = [false, true, true];
+  List<bool> answer = [true, false, true];
   int questionNumber = 0;
   @override
   Widget build(BuildContext context) {
