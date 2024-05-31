@@ -1,24 +1,39 @@
-// ignore_for_file: avoid_print
-
-import 'dart:html';
-
 import 'package:flutter/material.dart';
+import 'package:quizzler/quiz_brain.dart';
 
-class Quizzler extends StatefulWidget {
-  const Quizzler({super.key});
+
+class Quigzzler extends StatefulWidget {
+  Quizzler({super.key});
+  QuizBrain quizBrain = QuizBrain();
 
   @override
   State<Quizzler> createState() => _QuizzlerState();
 }
 
 class _QuizzlerState extends State<Quizzler> {
-  // List<Icon> scoreboard = [];
-  List<String> questions = [
-    "Sea otters have a favorite rock they use to break open food.",
-    "An ant can lift 1,000 times its body weight.",
-    "Greenland is the largest island in the world."
-  ];
-  List<bool> answer = [true, false, true];
+  List<Icon> scorekeeper = [];
+
+  void checkAnswer(bool userPickedAnswer) {
+    bool correctAnswer = quizBrain.getCorrectAnswer();
+    setState(() {
+      if (userPickedAnswer == correctAnswer) {
+        scorekeeper.add(const Icon(
+          Icons.check,
+          color: Colors.green,
+        ));
+      } else {
+        scorekeeper.add(const Icon(
+          Icons.close,
+          color: Colors.red,
+        ));
+      }
+
+      quizBrain.nextQuestion();
+    });
+  }
+
+  QuizBrain quizBrain = QuizBrain();
+
   int questionNumber = 0;
   @override
   Widget build(BuildContext context) {
@@ -35,7 +50,7 @@ class _QuizzlerState extends State<Quizzler> {
                 child: Expanded(
                   flex: 5,
                   child: Text(
-                    questions[questionNumber],
+                    quizBrain.getQuestionText(),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         color: Color.fromARGB(255, 246, 242, 242),
@@ -45,7 +60,6 @@ class _QuizzlerState extends State<Quizzler> {
               ),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Expanded(
@@ -53,15 +67,7 @@ class _QuizzlerState extends State<Quizzler> {
                 style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(Colors.green)),
                 onPressed: () {
-                  bool correctAnswer = answer[questionNumber];
-                  if (correctAnswer == true) {
-                    print("User got it right!");
-                  } else {
-                    print("User got it wrong!");
-                  }
-                  setState(() {
-                    questionNumber++;
-                  });
+                  checkAnswer(true);
                 },
                 child: const Text(
                   "True",
@@ -70,7 +76,6 @@ class _QuizzlerState extends State<Quizzler> {
               ),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Expanded(
@@ -78,15 +83,7 @@ class _QuizzlerState extends State<Quizzler> {
                 style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(Colors.red)),
                 onPressed: () {
-                  bool correctAnswer = answer[questionNumber];
-                  if (correctAnswer == false) {
-                    print("User got it right!");
-                  } else {
-                    print("User got it wrong!");
-                  }
-                  setState(() {
-                    questionNumber++;
-                  });
+                  checkAnswer(false);
                 },
                 child: const Text(
                   "False",
@@ -95,9 +92,9 @@ class _QuizzlerState extends State<Quizzler> {
               ),
             ),
           ),
-          // Row(
-          //   children: [scoreboard],
-          // )
+          Row(
+            children: scorekeeper,
+          )
         ],
       ),
     );
